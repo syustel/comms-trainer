@@ -1,0 +1,201 @@
+.grid-container {
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto;
+    padding: 10px;
+}
+.grid-item {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.sticker-textfield {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    width: 55px;
+    height: 55px;
+}
+
+.sticker-buffer {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.error {
+    border-color: #e74c3c;
+    border-width: 2px;
+}
+
+.UBL {
+    grid-column-start: 4;
+    margin-left: 1px;
+}
+.UB {
+}
+.UBR {
+    margin-right: 1px;
+}
+.UL {
+    grid-column-start: 4;
+    margin-left: 1px;
+}
+.U {
+}
+.UR {
+    margin-right: 1px;
+}
+.UFL {
+    grid-column-start: 4;
+    margin-left: 1px;
+    margin-bottom: 1px;
+}
+.UF {
+    margin-bottom: 1px;
+}
+.UFR {
+    margin-right: 1px;
+    margin-bottom: 1px;
+}
+.LUB {
+    grid-column-start: 1;
+    margin-top: 1px;
+}
+.LU {
+    margin-top: 1px;
+}
+.LUF {
+    margin-top: 1px;
+    margin-right: 1px;
+}
+.LB {
+}
+.L {
+}
+.LF {
+    margin-right: 1px;
+}
+.LDB {
+    margin-bottom: 1px;
+}
+.LD {
+    margin-bottom: 1px;
+}
+.LDF {
+    margin-right: 1px;
+    margin-bottom: 1px;
+}
+.FUL {
+    margin-top: 1px;
+    margin-left: 1px;
+}
+.FU {
+    margin-top: 1px;
+}
+.FUR {
+    margin-top: 1px;
+    margin-right: 1px;
+}
+.FL {
+    margin-left: 1px;
+}
+.F {
+}
+.FR {
+    margin-right: 1px;
+}
+.FDL {
+    margin-left: 1px;
+    margin-bottom: 1px;
+}
+.FD {
+    margin-bottom: 1px;
+}
+.FDR {
+    margin-right: 1px;
+    margin-bottom: 1px;
+}
+.RUF {
+    margin-top: 1px;
+    margin-left: 1px;
+}
+.RU {
+    margin-top: 1px;
+}
+.RUB {
+    margin-top: 1px;
+    margin-right: 1px;
+}
+.RF {
+    margin-left: 1px;
+}
+.R {
+}
+.RB {
+    margin-right: 1px;
+}
+.RDF {
+    margin-left: 1px;
+    margin-bottom: 1px;
+}
+.RD {
+    margin-bottom: 1px;
+}
+.RDB {
+    margin-right: 1px;
+    margin-bottom: 1px;
+}
+.BUR {
+    margin-top: 1px;
+    margin-left: 1px;
+}
+.BU {
+    margin-top: 1px;
+}
+.BUL {
+    margin-top: 1px;
+}
+.BR {
+    margin-left: 1px;
+}
+.B {
+}
+.BL {
+}
+.BDR {
+    margin-left: 1px;
+    margin-bottom: 1px;
+}
+.BD {
+    margin-bottom: 1px;
+}
+.BDL {
+    margin-bottom: 1px;
+}
+.DFL {
+    grid-column-start: 4;
+    margin-top: 1px;
+}
+.DF {
+    margin-top: 1px;
+}
+.DFR {
+    margin-top: 1px;
+}
+.DL {
+    grid-column-start: 4;
+}
+.D {
+}
+.DR {
+}
+.DBL {
+    grid-column-start: 4;
+}
+.DB {
+}
+.DBR {
+}
