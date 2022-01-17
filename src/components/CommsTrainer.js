@@ -18,7 +18,7 @@ export const CommsTrainer = ({pieceType}) => {
                     {pieceType[0].toUpperCase() + pieceType.substring(1)} comms
                 </h1>
                 <div className="alert alert-warning alert-dismissible m-2" role="alert">
-                    Looks like you don't have a letter scheme, do you want to <Link to="/config">make one</Link>?
+                    Looks like you don't have a letter scheme, do you want to <Link to="/config/letter_scheme">make one</Link>?
                 </div>
             </>
         );
