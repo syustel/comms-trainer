@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
 import { stickers } from '../helpers/stickers';
 import '../styles/cubeLayout.css';
@@ -103,6 +104,16 @@ export const CubeLayout = () => {
 
     return (
         <>
+            <div>
+                <h1 className='m-2' style={{display: 'inline-block'}}>
+                    Letter scheme
+                </h1>
+                <Link to="/config">
+                    <button className="btn btn-primary" style={{float: 'right'}}>
+                        <i className="fa fa-arrow-left"></i> Back
+                    </button>
+                </Link>
+            </div>
             <div className="grid-container">
                 {
                     stickers.map( sticker => (
@@ -131,9 +142,11 @@ export const CubeLayout = () => {
                 }
             </div>
 
-            <button type="button" className="btn btn-primary" onClick={save}>
-                Save
-            </button>
+            <div>
+                <button type="button" className="btn btn-primary btn-lg mt-3" onClick={save}>
+                    Save
+                </button>
+            </div>
 
             {showSuccess && 
                 <div className="alert alert-success m-2" role="alert">
