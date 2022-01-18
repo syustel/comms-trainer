@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 
 import { getTargets, notSamePiece, translatePair } from '../helpers/piecesLogic';
@@ -13,13 +13,6 @@ export const CommsConfig = ({pieceType}) => {
     const secondTargets = targets.filter(secondTarget => (notSamePiece(firstTarget, secondTarget)));
 
     const [showSuccess, setShowSuccess] = useState(false);
-    const [isMounted, setIsMounted] = useState(true);
-
-    useEffect(() => {
-        return () => {
-            setIsMounted(false);
-        }
-    }, [])
 
     if (!targets) {
         return (
@@ -48,12 +41,12 @@ export const CommsConfig = ({pieceType}) => {
         
         localStorage.setItem('comms',JSON.stringify(comms));
         setShowSuccess(true);
-        setTimeout(() => {
-            if (isMounted) {
-                setShowSuccess(false)
-            }
-        }, 3500);
     }
+
+    const change = () => {
+        setShowSuccess(false);
+    }
+    
 
     return (
         <>
@@ -77,6 +70,7 @@ export const CommsConfig = ({pieceType}) => {
                                     className = 'form-control'
                                     key = {secondTarget}
                                     id = {secondTarget}
+                                    onChange = {change}
                                     defaultValue = {comms[`${firstTarget}-${secondTarget}`]}
                                 />
                             </div>
