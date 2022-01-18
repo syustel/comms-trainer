@@ -29,12 +29,12 @@ export const Sidebar = () => {
                     </NavLink>
                 </li>
 
-                {/*<li>
+                {<li>
                     <NavLink to="/test" className="nav-link py-3 border-bottom">
                         <i className="fa fa-pencil"></i>
                         <small>Tests</small>
                     </NavLink>
-                </li>*/}
+                </li>}
             </ul>
 
         </div>

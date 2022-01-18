@@ -1,25 +1,23 @@
 import React from 'react'
+import { useStopwatch } from '../hooks/useStopwatch';
 
 export const Test = () => {
+
+    const {
+        time,
+        startTime,
+        stopTime
+      } = useStopwatch();
+
     return (
-        <div style={{
-            position: 'relative',
-            width: '55px',
-            height: '55px'
-        }}>
-            <input style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '55px',
-                height: '55px'
-            }} />
-            <input type="radio" style={{
-                position: 'absolute',
-                top: 2,
-                left: 2
-            }} />
-            
+        <div style={{textAlign: 'center'}}>
+            <h1>react-timer-hook</h1>
+            <p>Stopwatch Demo</p>
+            <div style={{fontSize: '100px'}}>
+                <span>{time}</span>
+            </div>
+            <button onClick={startTime}>Start</button>
+            <button onClick={stopTime}>Pause</button>
         </div>
     )
 }
