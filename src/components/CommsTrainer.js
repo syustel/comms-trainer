@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import { getTargets } from '../helpers/piecesLogic';
+import { getTargets, generatePairs } from '../helpers/piecesLogic';
 import { CommsPractice } from './CommsPractice';
-import { TargetsSelection } from './TargetsSelection';
 
 export const CommsTrainer = ({pieceType}) => {
+
+    const letterScheme = JSON.parse(localStorage.getItem("letterScheme"));
     
-    const [practiceTargets, setPracticeTargets] = useState([])
+    const [practiceTargets, setPracticeTargets] = useState([]);
+    //const [timerEnabled, settimerEnabled] = useState(false);
 
     const targets = getTargets(pieceType);
     
@@ -28,6 +30,15 @@ export const CommsTrainer = ({pieceType}) => {
         setPracticeTargets([]);
     }
 
+    const toggleAll = () => {
+        const allCheckbox = document.getElementById("All");
+        targets.forEach(target => document.getElementById(target).checked = allCheckbox.checked);
+    }
+
+    const go = () => {
+        setPracticeTargets(generatePairs(targets));
+    }
+
     return (
         <>
             
@@ -40,7 +51,7 @@ export const CommsTrainer = ({pieceType}) => {
                 <button className="btn btn-primary" style={{float: 'right'}} onClick={back}>
                     <i className="fa fa-arrow-left"></i> Back
                 </button>
-                <CommsPractice practiceTargets={practiceTargets}/>
+                <CommsPractice practiceTargets={practiceTargets} timerEnabled={document.getElementById('timer').checked}/>
                 </>
             :
                 <>
@@ -49,7 +60,62 @@ export const CommsTrainer = ({pieceType}) => {
                         <i className="fa fa-arrow-left"></i> Back
                     </button>
                 </Link>
-                <TargetsSelection targets={targets} setPracticeTargets={setPracticeTargets}/>
+                
+                <div style={{columnCount: 4, textAlign: 'left', marginLeft: 40}}>
+                    <div>
+                        <input
+                            type = "checkbox"
+                            id = "starting"
+                            value = "starting"
+                        />
+                        <label htmlFor='starting' style={{marginLeft: 2}}>Starting with</label><br/>
+                    </div>
+                    <div>
+                        <input
+                            type = "checkbox"
+                            id = "ending"
+                            value = "ending"
+                        />
+                        <label htmlFor='ending' style={{marginLeft: 2}}>Ending with :</label><br/>
+                    </div>
+                </div>
+                <br/>
+
+                <div style={{columnCount: 4, textAlign: 'left', marginLeft: 40}}>
+                    <div key = "All">
+                        <input
+                            type = "checkbox"
+                            id = "All"
+                            value = "All"
+                            onClick = {toggleAll}
+                        />
+                        <label htmlFor='All' style={{marginLeft: 2}}>All</label><br/>
+                    </div>
+                    {targets.map(target => (
+                        <div key = {target} >
+                            <input
+                                type = "checkbox"
+                                id = {target}
+                                value = {target}
+                            />
+                            <label htmlFor={target} style={{marginLeft: 2}}>{letterScheme[target]}</label><br/>
+                        </div>
+                    ))}
+                </div>
+
+                <br />
+                <div style={{textAlign: 'left', marginLeft: 40}}>
+                    <input
+                        type='checkbox'
+                        id='timer'
+                    />
+                    <label htmlFor='timer' style={{marginLeft: 2}}>Timer</label>
+                </div>
+                
+                <button className="btn btn-primary btn-lg" onClick={go}>
+                    Go
+                </button>
+
                 </>
             }
         </>

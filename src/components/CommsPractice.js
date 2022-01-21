@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useKeypress from 'react-use-keypress';
 
 import { useStopwatch } from '../hooks/useStopwatch';
 import { translatePair } from '../helpers/piecesLogic';
 
-export const CommsPractice = ({practiceTargets}) => {
+export const CommsPractice = ({practiceTargets, timerEnabled}) => {
 
     const comms = JSON.parse(localStorage.getItem("comms"))||{};
 
     const [commPos, setCommPos] = useState(0);
     const [times, setTimes] = useState({});
     
-
     const {
         time,
         startTime,
@@ -19,11 +18,20 @@ export const CommsPractice = ({practiceTargets}) => {
         restartTime,
         isRunning
       } = useStopwatch();
+
+      useEffect(() => {
+        if (!timerEnabled) {
+            stopTime();
+        }
+      }, [timerEnabled, stopTime]);
+      
     
     const nextComm = () => {
         setCommPos(Math.min(commPos+1, practiceTargets.length));
-        restartTime();
-        startTime();
+        if (timerEnabled) {
+            restartTime();
+            startTime();
+        }
     }
 
     const previousComm = () => {
@@ -31,7 +39,7 @@ export const CommsPractice = ({practiceTargets}) => {
     }
     
     const handleTimer = () => {
-        if (isRunning) {
+        if (isRunning && timerEnabled) {
             stopTime();
             let tempTimes = {...times};
             tempTimes[translatePair(practiceTargets[commPos])] = time
@@ -98,7 +106,7 @@ export const CommsPractice = ({practiceTargets}) => {
                     </button>
                 </h1>
 
-                <h3>{time}</h3>
+                {timerEnabled && <h3>{time}</h3>}
 
                 <h5>
                     {`${commPos+1}/${practiceTargets.length}`}
@@ -111,15 +119,17 @@ export const CommsPractice = ({practiceTargets}) => {
                     Retry?
                 </button>
 
-                <h5>Total: {sum(times)} Mean: {mean(times)} Deviation: {dev(times)}</h5>
+                {timerEnabled && <>
+                    <h5>Total: {sum(times)} Mean: {mean(times)} Deviation: {dev(times)}</h5>
 
-                <div style={{columnCount: 5}}>
-                    {practiceTargets.sort((pair1, pair2) => (times[translatePair(pair2)]-times[translatePair(pair1)])).map(pair => (
-                        <div key={translatePair(pair)} style={{color: evaluateTime(times[translatePair(pair)])}}>
-                            {`${translatePair(pair)} ${times[translatePair(pair)]}`}
-                        </div>
-                    ))}
-                </div>
+                    <div style={{columnCount: 5}}>
+                        {practiceTargets.sort((pair1, pair2) => (times[translatePair(pair2)]-times[translatePair(pair1)])).map(pair => (
+                            <div key={translatePair(pair)} style={{color: evaluateTime(times[translatePair(pair)])}}>
+                                {`${translatePair(pair)} ${times[translatePair(pair)]}`}
+                            </div>
+                        ))}
+                    </div>
+                </>}
                 </>
             }
         </div>
