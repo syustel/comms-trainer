@@ -46,6 +46,29 @@ export const CommsPractice = ({practiceTargets}) => {
         practiceTargets.sort(() => (Math.random() - 0.5));
         setCommPos(0);
     }
+
+    const sum = (times) => {
+        return Object.values(times).reduce((sum, num) => (sum+num));
+    }
+
+    const mean = (times) => {
+        return Math.round(sum(times)/Object.values(times).length);
+    }
+    
+    const dev = (times) => {
+        return Math.round(Math.sqrt(Object.values(times).map(t => ((t-mean(times))**2)).reduce((sum, num) => (sum+num))/Object.values(times).length));
+    };
+    
+    const evaluateTime = (time) => {
+        if (time > mean(times) + dev(times)) {
+            return 'red';
+        }
+        if (time < mean(times) - dev(times)) {
+            return 'green';
+        }
+        return 'blue';
+    };
+    
     
     useKeypress(" ", handleTimer);
     useKeypress("ArrowRight", nextComm);
@@ -87,9 +110,12 @@ export const CommsPractice = ({practiceTargets}) => {
                 <button className='btn btn-primary' onClick={retry} autoFocus>
                     Retry?
                 </button>
+
+                <h5>Total: {sum(times)} Mean: {mean(times)} Deviation: {dev(times)}</h5>
+
                 <div style={{columnCount: 5}}>
                     {practiceTargets.sort((pair1, pair2) => (times[translatePair(pair2)]-times[translatePair(pair1)])).map(pair => (
-                        <div key={translatePair(pair)}>
+                        <div key={translatePair(pair)} style={{color: evaluateTime(times[translatePair(pair)])}}>
                             {`${translatePair(pair)} ${times[translatePair(pair)]}`}
                         </div>
                     ))}
