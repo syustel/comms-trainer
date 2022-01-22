@@ -22,6 +22,16 @@ export const Config = () => {
                     <i className="fa fa-cog"></i> Corner comms
                 </button>
             </Link>
+            <Link to="/config/export_config">
+                <button type="button" className="btn btn-primary btn-lg m-2">
+                    <i className="fa fa-download"></i> Export config
+                </button>
+            </Link>
+            <Link to="/config/import_config">
+                <button type="button" className="btn btn-primary btn-lg m-2">
+                    <i className="fa fa-upload"></i> Import config
+                </button>
+            </Link>
         </>
     )
 }

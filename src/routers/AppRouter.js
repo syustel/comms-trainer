@@ -9,7 +9,9 @@ import { CommsConfig } from '../components/CommsConfig';
   import { CommsTrainer } from '../components/CommsTrainer';
 import { Config } from '../components/Config';
 import { CubeLayout } from '../components/CubeLayout';
+import { ExportConfig } from '../components/ExportConfig';
 import { Home } from '../components/Home';
+import { ImportConfig } from '../components/ImportConfig';
 import { Sidebar } from '../components/Sidebar';
 import { Test } from '../components/Test';
 import { Train } from '../components/Train';
@@ -45,6 +47,14 @@ export const AppRouter = () => {
 
                         <Route path="/config/corner_comms">
                             <CommsConfig pieceType={'corner'} />
+                        </Route>
+
+                        <Route path="/config/export_config">
+                            <ExportConfig />
+                        </Route>
+
+                        <Route path="/config/import_config">
+                            <ImportConfig />
                         </Route>
 
                         <Route path="/config">
