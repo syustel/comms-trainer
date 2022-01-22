@@ -10,8 +10,7 @@ export const CommsConfig = ({pieceType}) => {
 
     const targets = getTargets(pieceType);
     const [firstTarget, setFirstTarget] = useState('');
-    const secondTargets = targets.filter(secondTarget => (notSamePiece(firstTarget, secondTarget)));
-
+    
     const [showSuccess, setShowSuccess] = useState(false);
 
     if (!targets) {
@@ -26,6 +25,7 @@ export const CommsConfig = ({pieceType}) => {
             </>
         );
     }
+    const secondTargets = targets.filter(secondTarget => (notSamePiece(firstTarget, secondTarget)));
 
     const back = () => {
         setFirstTarget("");
