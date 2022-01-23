@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
+import '../styles/general.css';
 import { getTargets, generatePairs } from '../helpers/piecesLogic';
 import { CommsPractice } from './CommsPractice';
 
@@ -39,6 +40,16 @@ export const CommsTrainer = ({pieceType}) => {
         setPracticeTargets(generatePairs(targets));
     }
 
+    const controlType = () => {
+        let controlSelected = ''
+        document.getElementsByName("controls").forEach( radioButton => {
+            if (radioButton.checked) {
+                controlSelected = radioButton.value;
+            }
+        });
+        return controlSelected;
+    }    
+
     return (
         <>
             
@@ -51,7 +62,7 @@ export const CommsTrainer = ({pieceType}) => {
                 <button className="btn btn-primary" style={{float: 'right'}} onClick={back}>
                     <i className="fa fa-arrow-left"></i> Back
                 </button>
-                <CommsPractice practiceTargets={practiceTargets} timerEnabled={document.getElementById('timer').checked}/>
+                <CommsPractice practiceTargets={practiceTargets} timerEnabled={document.getElementById('timer').checked} controlType={controlType()}/>
                 </>
             :
                 <>
@@ -68,7 +79,7 @@ export const CommsTrainer = ({pieceType}) => {
                             id = "starting"
                             value = "starting"
                         />
-                        <label htmlFor='starting' style={{marginLeft: 2}}>Starting with</label><br/>
+                        <label htmlFor='starting'>Starting with</label><br/>
                     </div>
                     <div>
                         <input
@@ -76,7 +87,7 @@ export const CommsTrainer = ({pieceType}) => {
                             id = "ending"
                             value = "ending"
                         />
-                        <label htmlFor='ending' style={{marginLeft: 2}}>Ending with :</label><br/>
+                        <label htmlFor='ending'>Ending with :</label><br/>
                     </div>
                 </div>
                 <br/>
@@ -89,7 +100,7 @@ export const CommsTrainer = ({pieceType}) => {
                             value = "All"
                             onClick = {toggleAll}
                         />
-                        <label htmlFor='All' style={{marginLeft: 2}}>All</label><br/>
+                        <label htmlFor='All'>All</label><br/>
                     </div>
                     {targets.map(target => (
                         <div key = {target} >
@@ -98,7 +109,7 @@ export const CommsTrainer = ({pieceType}) => {
                                 id = {target}
                                 value = {target}
                             />
-                            <label htmlFor={target} style={{marginLeft: 2}}>{letterScheme[target]}</label><br/>
+                            <label htmlFor={target}>{letterScheme[target]}</label><br/>
                         </div>
                     ))}
                 </div>
@@ -109,10 +120,30 @@ export const CommsTrainer = ({pieceType}) => {
                         type='checkbox'
                         id='timer'
                     />
-                    <label htmlFor='timer' style={{marginLeft: 2}}>Timer</label>
+                    <label htmlFor='timer'>Timer</label>
+                </div>
+
+                <br />
+                <div style={{columnCount: 4, textAlign: 'left', marginLeft: 40}}>
+                    <p>Controls:</p>
+
+                    <div>
+                        <input type="radio" id='keyboard' name='controls' value="keyboard" defaultChecked/>
+                        <label htmlFor='keyboard'>Keyboard</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" id="touch" name='controls' value="touch"/>
+                        <label htmlFor='touch'>Touch</label>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" id='buttons' name='controls' value="buttons"/>
+                        <label htmlFor='buttons'>Buttons</label>
+                    </div>
                 </div>
                 
-                <button className="btn btn-primary btn-lg" onClick={go}>
+                <button className="btn btn-primary btn-lg mt-3" onClick={go}>
                     Go
                 </button>
 

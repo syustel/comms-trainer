@@ -4,7 +4,7 @@ import useKeypress from 'react-use-keypress';
 import { useStopwatch } from '../hooks/useStopwatch';
 import { translatePair } from '../helpers/piecesLogic';
 
-export const CommsPractice = ({practiceTargets, timerEnabled}) => {
+export const CommsPractice = ({practiceTargets, timerEnabled, controlType}) => {
 
     const comms = JSON.parse(localStorage.getItem("comms"))||{};
 
@@ -78,29 +78,23 @@ export const CommsPractice = ({practiceTargets, timerEnabled}) => {
     };
     
     
-    useKeypress(" ", handleTimer);
-    useKeypress("ArrowRight", nextComm);
-    useKeypress("ArrowLeft", previousComm);
+    useKeypress(" ", () => {controlType==="keyboard" && handleTimer()});
+    useKeypress("ArrowRight", () => {controlType==="keyboard" && nextComm()});
+    useKeypress("ArrowLeft", () => {controlType==="keyboard" && previousComm()});
 
     //const [debug, setDebug] = useState('debug')
 
-    return (
-        <div onTouchStart={nextComm}>
+    return (<>
+        <div onTouchStart={() => {controlType==="touch" && nextComm()}}>
             {commPos < practiceTargets.length?
                 <>
                 <h1 className='position-relative'>
                     {translatePair(practiceTargets[commPos])}
                     <button
-                        className='position-absolute top-0 btn btn-dark btn-sm mx-1'
-                        style={{
-                            width: '20px',
-                            height: '20px',
-                            borderRadius: '15px',
-                            fontSize: '11px',
-                            padding: '0px 6px',
-                            textAlign: 'center',
-                        }}
+                        className='reminder position-absolute top-0 btn btn-dark btn-sm mx-1'
                         title={comms[practiceTargets[commPos].join("-")]||'no comm'}
+                        data-bs-toggle="modal"
+                        data-bs-target="#reminderModal"
                     >
                         ?
                     </button>
@@ -111,6 +105,12 @@ export const CommsPractice = ({practiceTargets, timerEnabled}) => {
                 <h5>
                     {`${commPos+1}/${practiceTargets.length}`}
                 </h5>
+
+                {controlType==="buttons" && <>
+                    <button className='btn btn-primary btn-lg' onClick={previousComm}>Prev comm</button>
+                    {timerEnabled && <button className='btn btn-primary btn-lg' onClick={handleTimer}>{isRunning?'Stop':'Start'} timer</button>}
+                    <button className='btn btn-primary btn-lg' onClick={nextComm}>Next comm</button>
+                </>}
                 </>
             :
                 <>
@@ -133,5 +133,19 @@ export const CommsPractice = ({practiceTargets, timerEnabled}) => {
                 </>
             }
         </div>
-    )
+
+        <div className="modal fade" id="reminderModal" tabIndex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">{translatePair(practiceTargets[commPos])}</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            {comms[practiceTargets[commPos].join("-")]||'no comm'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </>)
 }
