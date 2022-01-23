@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './App.css';
+import './styles/general.css';
 //import { CubeLayout } from './components/CubeLayout';
 import { AppRouter } from './routers/AppRouter';
 

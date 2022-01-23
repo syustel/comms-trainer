@@ -16,9 +16,15 @@ export const CommsConfig = ({pieceType}) => {
     if (!targets) {
         return (
             <>
-                <h1 className='m-4'>
+                <h1 className='m-4' style={{display: 'inline-block'}}>
                     {pieceType[0].toUpperCase() + pieceType.substring(1)} comms
                 </h1>
+                <Link to="/config">
+                    <button className="btn btn-primary back">
+                        <i className="fa fa-arrow-left"></i> Back
+                    </button>
+                </Link>
+
                 <div className="alert alert-warning alert-dismissible m-2" role="alert">
                     Looks like you don't have a letter scheme, do you want to <Link to="/config/letter_scheme">make one</Link>?
                 </div>
@@ -55,7 +61,7 @@ export const CommsConfig = ({pieceType}) => {
             </h1>
 
             {firstTarget?<>
-                <button className="btn btn-primary" style={{float: 'right'}} onClick={back}>
+                <button className="btn btn-primary back" onClick={back}>
                     <i className="fa fa-arrow-left"></i> Back
                 </button>
                 <div style={{columnCount: 2}}>
@@ -64,7 +70,7 @@ export const CommsConfig = ({pieceType}) => {
                             <label htmlFor={secondTarget} className='col-1 col-form-label'>
                                 {translatePair([firstTarget, secondTarget])}:
                             </label>
-                            <div className='col-11'>
+                            <div className='col-10'>
                                 <input
                                     type = "text"
                                     className = 'form-control'
@@ -87,7 +93,7 @@ export const CommsConfig = ({pieceType}) => {
                 }
             </>:<>
                 <Link to="/config">
-                    <button className="btn btn-primary" style={{float: 'right'}}>
+                    <button className="btn btn-primary back">
                         <i className="fa fa-arrow-left"></i> Back
                     </button>
                 </Link>

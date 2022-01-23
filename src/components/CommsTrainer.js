@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import '../styles/general.css';
 import { getTargets, generatePairs } from '../helpers/piecesLogic';
 import { CommsPractice } from './CommsPractice';
 
@@ -17,9 +16,15 @@ export const CommsTrainer = ({pieceType}) => {
     if (!targets) {
         return (
             <>
-                <h1 className='m-4'>
+                <h1 className='m-4' style={{display: 'inline-block'}}>
                     {pieceType[0].toUpperCase() + pieceType.substring(1)} comms
                 </h1>
+                <Link to="/train">
+                    <button className="btn btn-primary back">
+                        <i className="fa fa-arrow-left"></i> Back
+                    </button>
+                </Link>
+
                 <div className="alert alert-warning alert-dismissible m-2" role="alert">
                     Looks like you don't have a letter scheme, do you want to <Link to="/config/letter_scheme">make one</Link>?
                 </div>
@@ -59,7 +64,7 @@ export const CommsTrainer = ({pieceType}) => {
 
             {practiceTargets.length?
                 <>
-                <button className="btn btn-primary" style={{float: 'right'}} onClick={back}>
+                <button className="btn btn-primary back" onClick={back}>
                     <i className="fa fa-arrow-left"></i> Back
                 </button>
                 <CommsPractice practiceTargets={practiceTargets} timerEnabled={document.getElementById('timer').checked} controlType={controlType()}/>
@@ -67,7 +72,7 @@ export const CommsTrainer = ({pieceType}) => {
             :
                 <>
                 <Link to="/train">
-                    <button className="btn btn-primary" style={{float: 'right'}}>
+                    <button className="btn btn-primary back">
                         <i className="fa fa-arrow-left"></i> Back
                     </button>
                 </Link>

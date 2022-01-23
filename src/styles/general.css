@@ -3,10 +3,14 @@ label {
 }
 
 button.reminder {
-    width: 20px;
     height: 20px;
+    width: 20px;
     border-radius: 15px;
-    font-size: 11px;
     padding: 0px 6px;
+    font-size: 11px;
     text-align: center;
+}
+
+button.back {
+    float: right;
 }

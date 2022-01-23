@@ -109,7 +109,7 @@ export const CubeLayout = () => {
                     Letter scheme
                 </h1>
                 <Link to="/config">
-                    <button className="btn btn-primary" style={{float: 'right'}}>
+                    <button className="btn btn-primary back">
                         <i className="fa fa-arrow-left"></i> Back
                     </button>
                 </Link>
