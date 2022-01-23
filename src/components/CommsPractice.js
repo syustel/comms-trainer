@@ -111,6 +111,19 @@ export const CommsPractice = ({practiceTargets, timerEnabled, controlType}) => {
                     {timerEnabled && <button className='btn btn-primary btn-lg' onClick={handleTimer}>{isRunning?'Stop':'Start'} timer</button>}
                     <button className='btn btn-primary btn-lg' onClick={nextComm}>Next comm</button>
                 </>}
+                <div className="modal fade" id="reminderModal" tabIndex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">{translatePair(practiceTargets[commPos])}</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                {comms[practiceTargets[commPos].join("-")]||'no comm'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </>
             :
                 <>
@@ -134,18 +147,5 @@ export const CommsPractice = ({practiceTargets, timerEnabled, controlType}) => {
             }
         </div>
 
-        <div className="modal fade" id="reminderModal" tabIndex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">{translatePair(practiceTargets[commPos])}</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            {comms[practiceTargets[commPos].join("-")]||'no comm'}
-                        </div>
-                    </div>
-                </div>
-            </div>
     </>)
 }
