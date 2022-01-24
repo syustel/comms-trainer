@@ -53,6 +53,12 @@ export const CommsConfig = ({pieceType}) => {
         setShowSuccess(false);
     }
     
+    const targetStatus = (target) => {
+        const secondTargets = targets.filter(secondTarget => (notSamePiece(target, secondTarget)));
+        return secondTargets.reduce((completed, secondTarget) => (
+            completed && !!comms[`${target}-${secondTarget}`]
+        ))?'primary':'secondary';
+    }    
 
     return (
         <>
@@ -99,7 +105,7 @@ export const CommsConfig = ({pieceType}) => {
                 </Link>
                 <br/>
                 {targets.map(target => (
-                    <button key={target} className='btn btn-primary btn-lg m-2' onClick={() => {setFirstTarget(target);}}>
+                    <button key={target} className={`btn btn-${targetStatus(target)} btn-lg m-2`} onClick={() => {setFirstTarget(target);}}>
                         {letterScheme[target]}
                     </button>
                 ))}
