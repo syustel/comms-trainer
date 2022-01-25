@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useKeypress from 'react-use-keypress';
 
 import { useStopwatch } from '../hooks/useStopwatch';
@@ -19,16 +19,16 @@ export const CommsPractice = ({practiceTargets, timerEnabled, controlType}) => {
         isRunning
       } = useStopwatch();
 
-      useEffect(() => {
-        if (!timerEnabled) {
-            stopTime();
-        }
-      }, [timerEnabled, stopTime]);
-      
+    useEffect(() => {
+    if (!timerEnabled) {
+        stopTime();
+    }
+    }, [timerEnabled, stopTime]);
+  
     
     const nextComm = () => {
         setCommPos(Math.min(commPos+1, practiceTargets.length));
-        if (timerEnabled) {
+        if (timerEnabled && commPos+1 < practiceTargets.length) {
             restartTime();
             startTime();
         }
@@ -53,25 +53,29 @@ export const CommsPractice = ({practiceTargets, timerEnabled, controlType}) => {
     const retry = () => {
         practiceTargets.sort(() => (Math.random() - 0.5));
         setCommPos(0);
+        restartTime();
+        startTime();
     }
 
     const sum = (times) => {
-        return Object.values(times).reduce((sum, num) => (sum+num));
+        return Object.values(times).reduce((sum, num) => (sum+num), 0);
     }
 
-    const mean = (times) => {
+    const calcMean = useCallback((times) => {
         return Math.round(sum(times)/Object.values(times).length);
-    }
+    }, []);
+    const mean = useMemo(() => calcMean(times), [calcMean, times]);
     
-    const dev = (times) => {
-        return Math.round(Math.sqrt(Object.values(times).map(t => ((t-mean(times))**2)).reduce((sum, num) => (sum+num))/Object.values(times).length));
-    };
+    const calcDev = useCallback((times) => {
+        return Math.round(Math.sqrt(Object.values(times).map(t => ((t-mean)**2)).reduce((sum, num) => (sum+num), 0)/Object.values(times).length));
+    }, [mean]);
+    const dev = useMemo(() => calcDev(times), [calcDev, times]);
     
     const evaluateTime = (time) => {
-        if (time > mean(times) + dev(times)) {
+        if (time > mean + dev) {
             return 'red';
         }
-        if (time < mean(times) - dev(times)) {
+        if (time < mean - dev) {
             return 'green';
         }
         return 'blue';
@@ -133,7 +137,7 @@ export const CommsPractice = ({practiceTargets, timerEnabled, controlType}) => {
                 </button>
 
                 {timerEnabled && <>
-                    <h5>Total: {sum(times)} Mean: {mean(times)} Deviation: {dev(times)}</h5>
+                    <h5>Total: {sum(times)} Mean: {calcMean(times)} Deviation: {calcDev(times)}</h5>
 
                     <div style={{columnCount: 5}}>
                         {practiceTargets.sort((pair1, pair2) => (times[translatePair(pair2)]-times[translatePair(pair1)])).map(pair => (
