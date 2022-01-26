@@ -1,1 +1,3 @@
 export const stickers = ['UBL','UB','UBR','UL','U','UR','UFL','UF','UFR','LUB','LU','LUF','FUL','FU','FUR','RUF','RU','RUB','BUR','BU','BUL','LB','L','LF','FL','F','FR','RF','R','RB','BR','B','BL','LDB','LD','LDF','FDL','FD','FDR','RDF','RD','RDB','BDR','BD','BDL','DFL','DF','DFR','DL','D','DR','DBL','DB','DBR'];
+
+export const cornersRotations = ['ULB', 'UBR', 'URF', 'UFL', 'DLF', 'DFR', 'DRB', 'DBL'];

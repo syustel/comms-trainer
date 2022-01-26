@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 
-import { getTargets, notSamePiece, translatePair } from '../helpers/piecesLogic';
+import { getTargets, notSamePiece, translatePair, validateComm } from '../helpers/cubeLogic';
 
 export const CommsConfig = ({pieceType}) => {
 
@@ -31,7 +31,15 @@ export const CommsConfig = ({pieceType}) => {
             </>
         );
     }
+
+    const buffer = letterScheme[`${pieceType}Buffer`];
     const secondTargets = targets.filter(secondTarget => (notSamePiece(firstTarget, secondTarget)));
+
+    const selectTarget = (e) => {
+        setFirstTarget(e.target.name);
+        setShowSuccess(false);
+    }
+    
 
     const back = () => {
         setFirstTarget("");
@@ -49,7 +57,11 @@ export const CommsConfig = ({pieceType}) => {
         setShowSuccess(true);
     }
 
-    const change = () => {
+    const handleChange = (e) => {
+        const alg = e.target.value;
+        const secondTarget = e.target.id
+        const validAlg = validateComm([buffer, firstTarget, secondTarget], alg);
+        e.target.className = `form-control ${alg&&(validAlg?'is-valid':'is-invalid')}`;
         setShowSuccess(false);
     }
     
@@ -79,10 +91,10 @@ export const CommsConfig = ({pieceType}) => {
                             <div className='col-10'>
                                 <input
                                     type = "text"
-                                    className = 'form-control'
+                                    className = {`form-control ${comms[`${firstTarget}-${secondTarget}`]&&(validateComm([buffer, firstTarget, secondTarget], comms[`${firstTarget}-${secondTarget}`])?'is-valid':'is-invalid')}`}
                                     key = {secondTarget}
                                     id = {secondTarget}
-                                    onChange = {change}
+                                    onChange = {handleChange}
                                     defaultValue = {comms[`${firstTarget}-${secondTarget}`]}
                                 />
                             </div>
@@ -105,7 +117,7 @@ export const CommsConfig = ({pieceType}) => {
                 </Link>
                 <br/>
                 {targets.map(target => (
-                    <button key={target} className={`btn btn-${targetStatus(target)} btn-lg m-2`} onClick={() => {setFirstTarget(target);}}>
+                    <button key={target} name={target} className={`btn btn-${targetStatus(target)} btn-lg m-2`} onClick={selectTarget}>
                         {letterScheme[target]}
                     </button>
                 ))}

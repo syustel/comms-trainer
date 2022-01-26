@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import { getTargets, generatePairs } from '../helpers/piecesLogic';
+import { getTargets, generatePairs } from '../helpers/cubeLogic';
 import { CommsPractice } from './CommsPractice';
 
 export const CommsTrainer = ({pieceType}) => {

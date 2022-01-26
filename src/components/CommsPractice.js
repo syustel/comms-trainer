@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useKeypress from 'react-use-keypress';
 
 import { useStopwatch } from '../hooks/useStopwatch';
-import { translatePair } from '../helpers/piecesLogic';
+import { translatePair } from '../helpers/cubeLogic';
 
 export const CommsPractice = ({practiceTargets, timerEnabled, controlType}) => {
 
