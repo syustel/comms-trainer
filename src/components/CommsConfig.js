@@ -67,9 +67,23 @@ export const CommsConfig = ({pieceType}) => {
     
     const targetStatus = (target) => {
         const secondTargets = targets.filter(secondTarget => (notSamePiece(target, secondTarget)));
-        return secondTargets.reduce((completed, secondTarget) => (
+        const completed = secondTargets.reduce((completed, secondTarget) => (
             completed && !!comms[`${target}-${secondTarget}`]
-        ))?'primary':'secondary';
+        ), true);
+        const allCorrect = secondTargets.reduce((correct, secondTarget) => {
+            const alg = comms[`${target}-${secondTarget}`];
+            if (alg) {
+                return correct && validateComm([buffer, target, secondTarget], alg);
+            } else {
+                return correct;
+            }
+        }, true);
+
+        if (allCorrect) {
+            return completed?'primary':'secondary';
+        } else {
+            return 'danger';
+        }
     }    
 
     return (
